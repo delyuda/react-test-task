@@ -1,0 +1,37 @@
+.asteroid-form {
+    width: 400px;
+    margin: 40px auto;
+    padding: 60px;
+    border: solid 1px #ddd;
+}
+
+.asteroid-form__submit-btn {
+    margin: 0 15px;
+}
+
+.asteroid-form__random-btn {
+    margin: 25px 0;
+}
+
+.btn {
+    background: #0000aa;
+    border:solid 1px #0000ff;
+    border-radius: 10px;
+    padding: 7px 10px;
+    color: #fff;
+}
+
+.btn:hover {
+    background: #0000dd;
+}
+
+.btn:active {
+    background: #000044;
+}
+
+.btn:disabled {
+    background: #444;
+    border-color: #555;
+    color: #ddd;
+
+}
