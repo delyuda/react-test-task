@@ -1,7 +1,6 @@
 class Http {
     get (url, params) {
         return new Promise( (resolve, reject) => {
-            console.log('get promise');
             debugger;
             const xhr = new XMLHttpRequest();
             const paramsStr = (params) ? this.getParamsStr(params) : '';
@@ -13,8 +12,6 @@ class Http {
             xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
             xhr.onload = function () {
-                console.log('onload');
-                debugger;
                 if (this.status === 200) {
                     resolve(JSON.parse(this.response));
                 } else {
