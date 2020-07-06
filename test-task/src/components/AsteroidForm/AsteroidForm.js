@@ -1,5 +1,6 @@
 import React from 'react';
 import './AsteroidForm.css';
+import { withRouter } from 'react-router';
 
 import AsteroidService from "../../services/asteroidService";
 const asteroidService = new AsteroidService();
@@ -25,11 +26,13 @@ class AsteroidForm extends React.Component {
                        onChange={this.inputHandler}
                        placeholder='Enter Asteroid ID'
                        className='asteroid-form__input' />
-                <button onClick={this.getAsteroid}
+                <button type='button'
+                        onClick={this.getAsteroid}
                         disabled={!this.state.asteroidId || !this.state.asteroidId.trim().length}
                         className='asteroid-form__submit-btn btn'>Submit</button>
                 <div>
-                    <button onClick={this.getRandomAsteroid}
+                    <button type='button'
+                            onClick={this.getRandomAsteroid}
                             className='asteroid-form__random-btn btn'>Random Asteroid</button>
                 </div>
                 { this.state.error ? <div>Oooops... Somethimg wrong.</div> : '' }
@@ -44,11 +47,12 @@ class AsteroidForm extends React.Component {
         });
     }
 
-    getAsteroid (id = this.state.asteroidId) {
-        asteroidService.getAsteroid({id: id})
+    getAsteroid (e, id = this.state.asteroidId) {
+        if (e) e.preventDefault();
+        asteroidService.getAsteroid(id)
             .then( response => {
-                console.log('response',response)
-                this.props.updated(response);
+                this.props.updated(response.data);
+                this.props.history.push('/asteroid')
             })
             .catch( error => {
                 this.setState({
@@ -57,11 +61,11 @@ class AsteroidForm extends React.Component {
             });
     }
 
-    getRandomAsteroid () {
+    getRandomAsteroid (e) {
+        e.preventDefault();
         asteroidService.getRandomAsteroid()
             .then( response => {
-                console.log('response')
-                this.getRandomId(response);
+                this.getRandomId(response.data.near_earth_objects);
             })
             .catch( error => {
                 this.setState({
@@ -70,11 +74,11 @@ class AsteroidForm extends React.Component {
             })
     }
 
-    getRandomId (data) {
+    getRandomId (data = []) {
         let randomIndex = Math.floor(Math.random() * (data.length - 1));
 
-        this.getAsteroid(data[randomIndex].id);
+        this.getAsteroid(null, data[randomIndex].id);
     }
 }
 
-export default AsteroidForm;
+export default withRouter(AsteroidForm);

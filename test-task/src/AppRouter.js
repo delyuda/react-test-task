@@ -36,7 +36,6 @@ export default class AppRouter extends React.Component {
         this.setState({
             asteroidData: data
         });
-        this.props.router.redirect('/asteroid')
     }
 
 }
